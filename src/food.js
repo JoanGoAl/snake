@@ -1,10 +1,10 @@
-import { Vec, KEY, isCollision } from './helpers.js'
+import { Vec, isCollision } from './helpers.js'
 
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d")
 
-let currentColor, isGameOver, food, requestID
+let currentColor
 
 
 class Food {
@@ -20,8 +20,8 @@ class Food {
     draw() {
         let { x, y } = this.pos;
         ctx.globalCompositeOperation = "lighter";
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = this.color;
+        // ctx.shadowBlur = 20;
+        // ctx.shadowColor = this.color;
         ctx.fillStyle = this.color;
         ctx.fillRect(x, y, this.size, this.size);
         ctx.globalCompositeOperation = "source-over";
@@ -30,9 +30,11 @@ class Food {
     spawn(history) {
         let randX = Math.trunc((Math.random() * this.cells)) * this.size;
         let randY = Math.trunc((Math.random() * this.cells)) * this.size;
-        for (let path of history) {
-            if (isCollision(new Vec(randX, randY), path)) {
-                return this.spawn();
+        if (history) {
+            for (let path of history) {
+                if (isCollision(new Vec(randX, randY), path)) {
+                    return this.spawn();
+                }
             }
         }
         this.color = currentColor = `hsl(${randColor()}, 100%, 50%)`;

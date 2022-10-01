@@ -5,8 +5,6 @@ let ctx = canvas.getContext("2d")
 let display_score = document.getElementById('score_val')
 
 
-let snake, cellsCount, currentColor, isGameOver, food, requestID
-let score = "00"
 let cells = 20
 const W = canvas.width = 400;
 const H = canvas.height = 400;
@@ -23,6 +21,8 @@ class Snake {
         this.color = "white";
         this.history = [];
         this.total = 1;
+        this.isGameOver = false;
+        this.score = "00";
     }
     draw() {
         let { x, y } = this.pos;
@@ -74,7 +74,7 @@ class Snake {
         for (let i = 0; i < this.history.length; i++) {
             let p = this.history[i];
             if (isCollision(this.pos, p)) {
-                isGameOver = true;
+                this.isGameOver = true;
             }
         }
     }
@@ -84,7 +84,7 @@ class Snake {
         this.controlls();
         if (!this.delay--) {
             if (isCollision(this.pos, food.pos)) {
-                incrementScore();
+                this.incrementScore();
                 food.spawn(this.history);
                 this.total++;
             }
@@ -97,11 +97,18 @@ class Snake {
             this.total > 3 ? this.selfCollision() : null;
         }
     }
+    incrementScore() {
+        this.score++;
+        display_score.innerText = this.score.toString().padStart(2, "0");
+    }
+    gameOver() {
+        ctx.fillStyle = "#4cffd7";
+        ctx.textAlign = "center";
+        ctx.font = "bold 30px Poppins, sans-serif";
+        ctx.fillText("GAME OVER", W / 2, H / 2);
+        ctx.font = "15px Poppins, sans-serif";
+        ctx.fillText(`SCORE   ${this.score}`, W / 2, H / 2 + 60);
+    }
 }
 
-function incrementScore() {
-    score++;
-    display_score.innerText = score.toString().padStart(2, "0");
-}
-
-export default Snake
+export default Snake 

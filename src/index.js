@@ -1,6 +1,6 @@
 import Snake from './snake.js';
 import Food from './food.js';
-import { Vec, KEY, isCollision } from './helpers.js'
+import { KEY } from './helpers.js'
 
 document.addEventListener('DOMContentLoaded', (e) => {
 
@@ -10,12 +10,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
     let restart = document.querySelector('.btn-restart');
     let start = document.querySelector('.btn-start')
 
-    let snake, cellSize, cellsCount, currentColor, isGameOver, food, requestID
-    let score = "00"
+    let snake, cellSize, cellsCount, food, requestID
     let cells = 20
     const W = canvas.width = 400;
     const H = canvas.height = 400;
-
 
     ctx.lineWidth = 1;
     ctx.strokeStyle = "#23233275";
@@ -34,42 +32,32 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
     function reset() {
         display_score.innerText = "00";
-        score = "00";
         snake = new Snake();
         food.spawn(snake.history);
         KEY.resetState();
-        isGameOver = false;
+        snake.isGameOver = false;
         clearTimeout(requestID);
         loop();
     }
 
     function loop() {
         clear();
-        if (!isGameOver) {
+        if (!snake.isGameOver) {
             requestID = setTimeout(loop, 1500 / 60);
             drawGrid();
             food.draw();
             snake.update(food);
         } else {
             clear();
-            gameOver();
+            snake.gameOver();
         }
-    }
-
-    function gameOver() {
-        ctx.fillStyle = "#4cffd7";
-        ctx.textAlign = "center";
-        ctx.font = "bold 30px Poppins, sans-serif";
-        ctx.fillText("GAME OVER", W / 2, H / 2);
-        ctx.font = "15px Poppins, sans-serif";
-        ctx.fillText(`SCORE   ${score}`, W / 2, H / 2 + 60);
     }
 
     function clear() {
         ctx.clearRect(0, 0, W, H);
     }
 
-    start.addEventListener('click', (e) => {
+    start.addEventListener('click', () => {
         initialize()
     })
 
