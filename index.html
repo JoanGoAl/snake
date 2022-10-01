@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SNAKE by Joan González</title>
-    <script src="snake.js"></script>
-    <link rel="stylesheet" href="snake.css">
+    <script type="module" src="./src/index.js"></script>
+    <link rel="stylesheet" href="./style/snake.css">
 </head>
 
 <body>
     <div class="main">
         <div class="game">
             <div class="score">
-                score: <span class="score_val">0</span>
+                score: <span id="score_val"></span>
             </div>
             <div class="canvas-wrapper">
                 <canvas id="canvas"></canvas>
@@ -22,7 +22,7 @@
             <div class="controls">
                 <div class="button-container">
                     <button class="btn-start">Start</button>
-                    <button class="btn-pause">Pause</button>
+                    <button class="btn-restart">Restart</button>
                 </div>
             </div>
         </div>
