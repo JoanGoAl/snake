@@ -2,16 +2,14 @@ import { Vector, KEY, isCollision } from "./helpers.js"
 import { ctx, display_score, cellSize, cells, W, H } from '../utils/constants.js'
 
 class Snake {
-    constructor(i, type) {
+    constructor() {
         this.pos = new Vector(W / 2, H / 2);
         this.dir = new Vector(0, 0);
-        this.type = type;
-        this.index = i;
         this.delay = 5;
         this.size = W / cells;
         this.color = "white";
         this.history = [];
-        this.total = 1;
+        this.longitud = 1;
         this.isGameOver = false;
         this.score = 0;
     }
@@ -22,7 +20,7 @@ class Snake {
         ctx.shadowColor = "rgba(255,255,255,.3 )";
         ctx.fillRect(x, y, this.size, this.size);
         ctx.shadowBlur = 0;
-        if (this.total >= 2) {
+        if (this.longitud >= 2) {
             for (let i = 0; i < this.history.length - 1; i++) {
                 let { x, y } = this.history[i];
                 ctx.lineWidth = 1;
@@ -77,15 +75,15 @@ class Snake {
             if (isCollision(this.pos, food.pos)) {
                 this.incrementScore();
                 food.spawn(this.history);
-                this.total++;
+                this.longitud++;
             }
-            this.history[this.total - 1] = new Vector(this.pos.x, this.pos.y);
-            for (let i = 0; i < this.total - 1; i++) {
+            this.history[this.longitud - 1] = new Vector(this.pos.x, this.pos.y);
+            for (let i = 0; i < this.longitud - 1; i++) {
                 this.history[i] = this.history[i + 1];
             }
             this.pos.add(this.dir);
             this.delay = 5;
-            this.total > 3 ? this.selfCollision() : null;
+            this.longitud > 3 ? this.selfCollision() : null;
         }
     }
     incrementScore() {
@@ -97,7 +95,7 @@ class Snake {
         return setTimeout(loop, snakeSpeed);
     }
     gameOver() {
-        ctx.fillStyle = "#4cffd7";
+        ctx.fillStyle = "#1FAAC9";
         ctx.textAlign = "center";
         ctx.font = "bold 30px Poppins, sans-serif";
         ctx.fillText("GAME OVER", W / 2, H / 2);

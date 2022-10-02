@@ -9,13 +9,15 @@ ctx.strokeStyle = "#23233275";
 ctx.shadowBlur = 0;
 
 const start = () => {
-    clearTimeout(speed);
-    ctx.imageSmoothingEnabled = false;
-    KEY.listen();
-    snake = new Snake();
-    food = new Food(cells, cellSize);
-    restart.addEventListener("click", reset, false);
-    loop();
+    if (!snake) {
+        clearTimeout(speed);
+        ctx.imageSmoothingEnabled = false;
+        KEY.listen();
+        snake = new Snake();
+        food = new Food(cells, cellSize);
+        restart.addEventListener("click", reset, false);
+        loop();
+    }
 }
 
 const reset = () => {
