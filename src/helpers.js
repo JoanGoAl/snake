@@ -1,4 +1,6 @@
-class Vec {
+import { cells, W, H, ctx } from "../utils/constants.js"
+
+class Vector {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -9,7 +11,7 @@ class Vec {
         return this;
     }
     mult(v) {
-        if (v instanceof Vec) {
+        if (v instanceof Vector) {
             this.x *= v.x;
             this.y *= v.y;
             return this;
@@ -54,4 +56,19 @@ const isCollision = (v1, v2) => {
     return v1.x == v2.x && v1.y == v2.y;
 }
 
-export { Vec, KEY, isCollision }
+const drawGrid = () => {
+    for (let i = 1; i < cells; i++) {
+        let f = (W / cells) * i;
+        ctx.beginPath();
+        ctx.moveTo(f, 0);
+        ctx.lineTo(f, H);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, f);
+        ctx.lineTo(W, f);
+        ctx.stroke();
+        ctx.closePath();
+    }
+}
+
+export { Vector, KEY, isCollision, drawGrid }

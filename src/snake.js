@@ -1,19 +1,10 @@
-import { Vec, KEY, isCollision } from "./helpers.js"
-
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d")
-let display_score = document.getElementById('score_val')
-
-
-let cells = 20
-const W = canvas.width = 400;
-const H = canvas.height = 400;
-let cellSize = W / cells;
+import { Vector, KEY, isCollision } from "./helpers.js"
+import { ctx, display_score, cellSize, cells, W, H } from '../utils/constants.js'
 
 class Snake {
     constructor(i, type) {
-        this.pos = new Vec(W / 2, H / 2);
-        this.dir = new Vec(0, 0);
+        this.pos = new Vector(W / 2, H / 2);
+        this.dir = new Vector(0, 0);
         this.type = type;
         this.index = i;
         this.delay = 5;
@@ -22,7 +13,7 @@ class Snake {
         this.history = [];
         this.total = 1;
         this.isGameOver = false;
-        this.score = "00";
+        this.score = 0;
     }
     draw() {
         let { x, y } = this.pos;
@@ -58,16 +49,16 @@ class Snake {
     controlls() {
         let dir = this.size;
         if (KEY.ArrowUp) {
-            this.dir = new Vec(0, -dir);
+            this.dir = new Vector(0, -dir);
         }
         if (KEY.ArrowDown) {
-            this.dir = new Vec(0, dir);
+            this.dir = new Vector(0, dir);
         }
         if (KEY.ArrowLeft) {
-            this.dir = new Vec(-dir, 0);
+            this.dir = new Vector(-dir, 0);
         }
         if (KEY.ArrowRight) {
-            this.dir = new Vec(dir, 0);
+            this.dir = new Vector(dir, 0);
         }
     }
     selfCollision() {
@@ -88,7 +79,7 @@ class Snake {
                 food.spawn(this.history);
                 this.total++;
             }
-            this.history[this.total - 1] = new Vec(this.pos.x, this.pos.y);
+            this.history[this.total - 1] = new Vector(this.pos.x, this.pos.y);
             for (let i = 0; i < this.total - 1; i++) {
                 this.history[i] = this.history[i + 1];
             }
@@ -100,6 +91,10 @@ class Snake {
     incrementScore() {
         this.score++;
         display_score.innerText = this.score.toString().padStart(2, "0");
+    }
+    speed(loop) {
+        let snakeSpeed = 35 - (this.score / 2)
+        return setTimeout(loop, snakeSpeed);
     }
     gameOver() {
         ctx.fillStyle = "#4cffd7";
