@@ -1,23 +1,26 @@
 import Snake from './snake.js';
 import Food from './food.js';
+import Login from './login.js';
 import { KEY, drawGrid } from './helpers.js'
 import { ctx, display_score, restart, startButt, cellSize, cells, W, H } from '../utils/constants.js'
 
 let snake, food, speed
+let login
 ctx.lineWidth = 1;
 ctx.strokeStyle = "#23233275";
 ctx.shadowBlur = 0;
 
 const start = () => {
-    if (!snake) {
-        clearTimeout(speed);
-        ctx.imageSmoothingEnabled = false;
-        KEY.listen();
-        snake = new Snake();
-        food = new Food(cells, cellSize);
-        restart.addEventListener("click", reset, false);
-        loop();
-    }
+    login = new Login()
+    login.drawLogin()
+    // if (!snake) {
+    //     clearTimeout(speed);
+    //     KEY.listen();
+    //     snake = new Snake();
+    //     food = new Food(cells, cellSize);
+    //     restart.addEventListener("click", reset, false);
+    //     loop();
+    // }
 }
 
 const reset = () => {
