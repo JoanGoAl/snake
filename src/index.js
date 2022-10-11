@@ -11,16 +11,14 @@ ctx.strokeStyle = "#23233275";
 ctx.shadowBlur = 0;
 
 const start = () => {
-    login = new Login()
-    login.drawLogin()
-    // if (!snake) {
-    //     clearTimeout(speed);
-    //     KEY.listen();
-    //     snake = new Snake();
-    //     food = new Food(cells, cellSize);
-    //     restart.addEventListener("click", reset, false);
-    //     loop();
-    // }
+    if (!snake) {
+        clearTimeout(speed);
+        KEY.listen();
+        snake = new Snake();
+        food = new Food(cells, cellSize);
+        restart.addEventListener("click", reset, false);
+        loop();
+    }
 }
 
 const reset = () => {
@@ -53,3 +51,6 @@ const clear = () => {
 startButt.addEventListener('click', () => {
     start()
 })
+
+login = new Login()
+login.drawLogin()

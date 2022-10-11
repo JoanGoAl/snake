@@ -12,6 +12,7 @@ class Snake {
         this.longitud = 1;
         this.isGameOver = false;
         this.score = 0;
+        this.teleport = false
     }
     draw() {
         let { x, y } = this.pos;
@@ -29,7 +30,7 @@ class Snake {
             }
         }
     }
-    walls() {
+    wallsTeleport() {
         let { x, y } = this.pos;
         if (x + cellSize > W) {
             this.pos.x = 0;
@@ -42,6 +43,21 @@ class Snake {
         }
         if (x < 0) {
             this.pos.x = W - cellSize;
+        }
+    }
+    wallsColition() {
+        let { x, y } = this.pos;
+        if (x + cellSize > W) {
+            this.isGameOver = true;
+        }
+        if (y + cellSize > W) {
+            this.isGameOver = true;
+        }
+        if (y < 0) {
+            this.isGameOver = true;
+        }
+        if (x < 0) {
+            this.isGameOver = true;
         }
     }
     controlls() {
@@ -68,7 +84,7 @@ class Snake {
         }
     }
     update(food) {
-        this.walls();
+        this.teleport ? this.wallsTeleport() : this.wallsColition()
         this.draw();
         this.controlls();
         if (!this.delay--) {
