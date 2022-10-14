@@ -9,7 +9,7 @@
     <script type="module" src="./src/index.js"></script>
     <link rel="stylesheet" href="./style/snake.css">
     <link rel="stylesheet" href="./style/login.css">
-
+    <link rel="stylesheet" href="./style/dificultad.css">
 </head>
 
 <body>
@@ -22,6 +22,24 @@
                 <canvas id="canvas"></canvas>
             </div>
             <div class="controls">
+                <div class="dificultad">
+                    <input type="radio" name="diff" id="option-1" value="clasic" checked>
+                    <input type="radio" name="diff" id="option-2" value="advances">
+                    <input type="radio" name="diff" id="option-3" value="pro">
+                    <label for="option-1" class="option option-1">
+                        <div class="dot"></div>
+                        <span>Clasic</span>
+                    </label>
+                    <label for="option-2" class="option option-2">
+                        <div class="dot"></div>
+                        <span>Advanced</span>
+                    </label>
+                    <label for="option-3" class="option option-3">
+                        <div class="dot"></div>
+                        <span>Pro</span>
+                    </label>
+
+                </div>
                 <div class="button-container">
                     <button class="btn-start">Start</button>
                     <button class="btn-restart">Restart</button>

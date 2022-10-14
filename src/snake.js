@@ -2,7 +2,7 @@ import { Vector, KEY, isCollision } from "./helpers.js"
 import { ctx, display_score, cellSize, cells, W, H } from '../utils/constants.js'
 
 class Snake {
-    constructor() {
+    constructor(dificultad) {
         this.pos = new Vector(W / 2, H / 2);
         this.dir = new Vector(0, 0);
         this.delay = 5;
@@ -12,7 +12,8 @@ class Snake {
         this.longitud = 1;
         this.isGameOver = false;
         this.score = 0;
-        this.teleport = false
+        this.teleport = false;
+        this.dificultad = dificultad
     }
     draw() {
         let { x, y } = this.pos;
@@ -117,6 +118,9 @@ class Snake {
         ctx.fillText("GAME OVER", W / 2, H / 2);
         ctx.font = "15px Poppins, sans-serif";
         ctx.fillText(`SCORE   ${this.score}`, W / 2, H / 2 + 60);
+        console.log(this.dificultad);
+
+
     }
 }
 

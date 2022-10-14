@@ -26,6 +26,7 @@ class Login {
         this.passwd = ""
         this.maxScore = ""
         this.loginStatus = false
+        this.avatar = `https://robohash.org/${this.userName}-one`
     }
     drawLogin() {
         background.className = 'background'
@@ -68,26 +69,27 @@ class Login {
             this.login()
         })
     }
-    login() {
+    async login() {
 
         this.userName = inputName.value
         this.passwd = inputPasswd.value
 
-        let user = {
-            login: this.userName,
-            passwd: this.passwd
-        }
 
-        if (user.login) {
-            fetch(`http://localhost:3000/login/${user.login}`)
+        if (this.userName) {
+            let info = await fetch(`http://localhost:3000/login/${this.userName}`)
                 .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                });
+                .then(data => data);
+
+
+            if (this.passwd === info.passwd) {
+                this.loginStatus = true
+                labelError.innerText = ''
+            } else {
+                labelError.innerText = 'Usuario o contraseña incorrecta'
+            }
+        } else {
+            labelError.innerText = 'Usuario o contraseña incorrecta'
         }
-
-
-        // user.passwd !== 'joang' ? labelError.innerText = 'Contraseña incorrecta' : labelError.innerText = ''
 
         if (this.loginStatus) {
             this.clearLogin()

@@ -10,11 +10,14 @@ ctx.lineWidth = 1;
 ctx.strokeStyle = "#23233275";
 ctx.shadowBlur = 0;
 
+
 const start = () => {
+    let dificultad = document.querySelector('input[name="diff"]:checked').value;
+
     if (!snake) {
         clearTimeout(speed);
         KEY.listen();
-        snake = new Snake();
+        snake = new Snake(dificultad);
         food = new Food(cells, cellSize);
         restart.addEventListener("click", reset, false);
         loop();
@@ -22,8 +25,10 @@ const start = () => {
 }
 
 const reset = () => {
+    let dificultad = document.querySelector('input[name="diff"]:checked').value;
+
     display_score.innerText = "00";
-    snake = new Snake();
+    snake = new Snake(dificultad);
     food.spawn(snake.history);
     KEY.resetState();
     snake.isGameOver = false;
@@ -52,5 +57,5 @@ startButt.addEventListener('click', () => {
     start()
 })
 
-login = new Login()
-login.drawLogin()
+// login = new Login()
+// login.drawLogin()
