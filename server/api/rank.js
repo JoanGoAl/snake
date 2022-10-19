@@ -13,6 +13,8 @@ exports.setRank = async (req, res) => {
 
         inforank.push(info)
 
+        console.log();
+
         fs.writeFileSync(path, JSON.stringify(inforank, null, 2), 'utf8');
         res.send(inforank)
     } catch (error) {
@@ -25,7 +27,7 @@ exports.getScore = async (req, res) => {
 
     try {
         let inforank = JSON.parse(fs.readFileSync(path))
-        res.send(inforank.slice(0, 5))
+        res.send(inforank)
     } catch (error) {
         res.send({ info: 'An error has occurred ', error })
     }

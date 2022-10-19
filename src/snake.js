@@ -111,15 +111,28 @@ class Snake {
         let snakeSpeed = 35 - (this.score / 2)
         return setTimeout(loop, snakeSpeed);
     }
-    gameOver() {
+    async gameOver(login) {
+
+        let score = {
+            name: login.userName,
+            score: this.score
+        }
+
         ctx.fillStyle = "#1FAAC9";
         ctx.textAlign = "center";
         ctx.font = "bold 30px Poppins, sans-serif";
         ctx.fillText("GAME OVER", W / 2, H / 2);
         ctx.font = "15px Poppins, sans-serif";
         ctx.fillText(`SCORE   ${this.score}`, W / 2, H / 2 + 60);
-        console.log(this.dificultad);
 
+        try {
+            const info = await fetch(`http://localhost:3000/rank/setScore/${score.name}/${score.score}`, { method: "POST", })
+            const content = await info.json()
+
+            console.log(content);
+        } catch (err) {
+            console.log(err);
+        }
 
     }
 }

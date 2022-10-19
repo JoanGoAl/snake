@@ -1,0 +1,24 @@
+.top-score {
+    border-radius: 10px;
+    opacity: 0.5;
+    position: absolute;
+    width: 350px;
+    height: 400px;
+    background-color: black;
+    left: 10%;
+    top: 3%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+    justify-content: space-around;
+}
+
+.top-score>div {
+    width: 100%;
+    padding: 10px 0 10px 35px;
+}
+
+.title-score {
+    text-align: center;
+}

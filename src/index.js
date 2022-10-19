@@ -13,7 +13,6 @@ ctx.shadowBlur = 0;
 
 const start = () => {
     let dificultad = document.querySelector('input[name="diff"]:checked').value;
-
     if (!snake) {
         clearTimeout(speed);
         KEY.listen();
@@ -26,7 +25,7 @@ const start = () => {
 
 const reset = () => {
     let dificultad = document.querySelector('input[name="diff"]:checked').value;
-
+    getScore()
     display_score.innerText = "00";
     snake = new Snake(dificultad);
     food.spawn(snake.history);
@@ -45,7 +44,7 @@ const loop = () => {
         snake.update(food);
     } else {
         clear();
-        snake.gameOver();
+        snake.gameOver(login);
     }
 }
 
@@ -57,5 +56,32 @@ startButt.addEventListener('click', () => {
     start()
 })
 
-// login = new Login()
-// login.drawLogin()
+const getScore = async () => {
+
+    let scores = document.querySelectorAll('.score-top')
+    scores.forEach(item => {
+        item.remove()
+    })
+
+    let info = await fetch(`http://localhost:3000/rank/getScore`)
+        .then(response => response.json())
+        .then(data => data);
+
+    let sortedInfo = info.sort((a, b) => b.score - a.score).slice(0, 5)
+
+    let containerScore = document.querySelector('.top-score')
+
+    sortedInfo.forEach(item => {
+
+        let aux = document.createElement('div')
+        aux.className = "score-top"
+        aux.innerText = `${item.name}: ${item.score}`
+
+        containerScore.appendChild(aux)
+    });
+    // document.createElement
+}
+getScore()
+
+login = new Login()
+login.drawLogin()
