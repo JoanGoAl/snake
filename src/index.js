@@ -17,7 +17,24 @@ const start = () => {
     if (!snake) {
         clearTimeout(speed);
         KEY.listen();
-        snake = new Snake(dificultad);
+        snake = new Snake();
+        switch (dificultad) {
+            case 'classic':
+                snake.obstaculosMode = false
+                snake.teleport = false
+                break;
+            case 'advanced':
+                snake.obstaculosMode = true
+                snake.teleport = false
+                break;
+            case 'pro':
+                snake.obstaculosMode = true
+                snake.teleport = true
+                break;
+            default:
+                break;
+        }
+        console.log(dificultad);
         food = new Food(cells, cellSize);
         obstacle = new Obstaculo(cells, cellSize);
         restart.addEventListener("click", reset, false);
@@ -29,7 +46,23 @@ const reset = () => {
     let dificultad = document.querySelector('input[name="diff"]:checked').value;
     getScore()
     display_score.innerText = "00";
-    snake = new Snake(dificultad);
+    snake = new Snake();
+    switch (dificultad) {
+        case 'classic':
+            snake.obstaculosMode = false
+            snake.teleport = false
+            break;
+        case 'advanced':
+            snake.obstaculosMode = true
+            snake.teleport = false
+            break;
+        case 'pro':
+            snake.obstaculosMode = true
+            snake.teleport = true
+            break;
+        default:
+            break;
+    }
     obstacle = new Obstaculo(cells, cellSize);
     food.spawn(snake.history, obstacle.history);
     KEY.resetState();
