@@ -1,5 +1,6 @@
 import { Vector, KEY, isCollision } from "./helpers.js"
 import { ctx, display_score, cellSize, cells, W, H } from '../utils/constants.js'
+import Obstaculo from "./obstaculo.js";
 
 class Snake {
     constructor(dificultad) {
@@ -12,8 +13,9 @@ class Snake {
         this.longitud = 1;
         this.isGameOver = false;
         this.score = 0;
+        this.dificultad = dificultad;
         this.teleport = false;
-        this.dificultad = dificultad
+        this.obstaculosMode = true;
     }
     draw() {
         let { x, y } = this.pos;
@@ -84,14 +86,20 @@ class Snake {
             }
         }
     }
-    update(food) {
+    update(food, obstacle) {
         this.teleport ? this.wallsTeleport() : this.wallsColition()
         this.draw();
         this.controlls();
+        for (let i = 0; i < obstacle.history.length; i++) {
+            if (isCollision(this.pos, obstacle.history[i])) {
+                this.isGameOver = true
+            }
+        }
         if (!this.delay--) {
             if (isCollision(this.pos, food.pos)) {
                 this.incrementScore();
                 food.spawn(this.history);
+                this.obstaculosMode ? obstacle.spawn(this.history) : null
                 this.longitud++;
             }
             this.history[this.longitud - 1] = new Vector(this.pos.x, this.pos.y);
@@ -113,10 +121,10 @@ class Snake {
     }
     async gameOver(login) {
 
-        let score = {
-            name: login.userName,
-            score: this.score
-        }
+        // let score = {
+        //     name: login.userName,
+        //     score: this.score
+        // }
 
         ctx.fillStyle = "#1FAAC9";
         ctx.textAlign = "center";
@@ -125,14 +133,14 @@ class Snake {
         ctx.font = "15px Poppins, sans-serif";
         ctx.fillText(`SCORE   ${this.score}`, W / 2, H / 2 + 60);
 
-        try {
-            const info = await fetch(`http://localhost:3000/rank/setScore/${score.name}/${score.score}`, { method: "POST", })
-            const content = await info.json()
+        // try {
+        //     const info = await fetch(`http://localhost:3000/rank/setScore/${score.name}/${score.score}`, { method: "POST", })
+        //     const content = await info.json()
 
-            console.log(content);
-        } catch (err) {
-            console.log(err);
-        }
+        //     console.log(content);
+        // } catch (err) {
+        //     console.log(err);
+        // }
 
     }
 }

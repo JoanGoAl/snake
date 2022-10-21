@@ -1,32 +1,31 @@
 import { Vector, isCollision } from './helpers.js'
 import { ctx } from '../utils/constants.js'
 
-class Food {
+class Obstaculo {
     constructor(cells, cellSize) {
         this.pos = new Vector(
             Math.trunc(Math.random() * cells) * cellSize,
             Math.trunc(Math.random() * cells) * cellSize
         );
-        this.color = this.randColor();
+        this.history = [];
         this.size = cellSize;
-        this.cells = cells
+        this.cells = cells;
+        this.cant = 0
     }
     draw() {
-        let { x, y } = this.pos;
-        ctx.globalCompositeOperation = "lighter";
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = this.color;
-        ctx.fillStyle = this.color;
-        ctx.fillRect(x, y, this.size, this.size);
-        ctx.globalCompositeOperation = "source-over";
-        ctx.shadowBlur = 0;
+        for (let i = 0; i < this.history.length; i++) {
+            let { x, y } = this.history[i];
+            ctx.lineWidth = 1;
+            ctx.fillStyle = "black";
+            ctx.fillRect(x, y, this.size, this.size);
+        }
     }
-    spawn(snakeHistory, obstacleHistory) {
+    spawn(snakeHistory) {
         let randX = Math.trunc((Math.random() * this.cells)) * this.size;
         let randY = Math.trunc((Math.random() * this.cells)) * this.size;
 
-        let auxHistory = obstacleHistory
-            ? [...snakeHistory, ...obstacleHistory]
+        let auxHistory = this.history
+            ? [...snakeHistory, ...this.history]
             : snakeHistory
 
         if (auxHistory) {
@@ -36,12 +35,10 @@ class Food {
                 }
             }
         }
-        this.color = this.randColor();
         this.pos = new Vector(randX, randY);
-    }
-    randColor() {
-        return `hsl(${(Math.random() * 360)},100%,50%)`;
+        this.history.push(this.pos)
+        this.cant++
     }
 }
 
-export default Food
+export default Obstaculo

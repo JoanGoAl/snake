@@ -8,6 +8,7 @@ const Rank = require('./api/rank')
 
 app.use(cors());
 
+
 app.get('/login/:name', Login.login)
 app.post('/rank/setScore/:name/:score', Rank.setRank)
 app.get('/rank/getScore', Rank.getScore)

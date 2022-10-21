@@ -11,6 +11,8 @@ exports.setRank = async (req, res) => {
     try {
         let inforank = JSON.parse(fs.readFileSync(path))
 
+
+
         inforank.push(info)
 
         console.log();
