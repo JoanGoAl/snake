@@ -1,6 +1,5 @@
 import { Vector, KEY, isCollision } from "./helpers.js"
 import { ctx, display_score, cellSize, cells, W, H } from '../utils/constants.js'
-import Obstaculo from "./obstaculo.js";
 
 class Snake {
     constructor(dificultad) {
@@ -116,6 +115,10 @@ class Snake {
         display_score.innerText = this.score.toString().padStart(2, "0");
     }
     speed(loop) {
+
+        // this.dificultad === 'pro'
+        //     ? snakeSpeed = 35 - (this.score / 2)
+        //     : snakeSpeed = 35 - (this.score / 2)
         let snakeSpeed = 35 - (this.score / 2)
         return setTimeout(loop, snakeSpeed);
     }

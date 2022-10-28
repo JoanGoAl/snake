@@ -72,17 +72,17 @@ class Login {
     async login() {
 
         this.userName = inputName.value
-        this.passwd = inputPasswd.value
-
 
         if (this.userName) {
             let info = await fetch(`http://localhost:3000/login/${this.userName}`)
                 .then(response => response.json())
                 .then(data => data);
+            console.log(info);
 
-
-            if (this.passwd === info.passwd) {
+            if (inputPasswd.value === info.passwd) {
                 this.loginStatus = true
+                this.userName = info.name
+                this.maxScore = info.maxScore
                 labelError.innerText = ''
             } else {
                 labelError.innerText = 'Usuario o contraseña incorrecta'
@@ -97,6 +97,38 @@ class Login {
     }
     clearLogin() {
         contiainerAll.remove()
+        this.getScore()
+        let container_personal = document.querySelector('.container-personal-score')
+        container_personal.innerText = `${this.userName}: ${this.maxScore}`
+    }
+    getScore = async () => {
+
+        let scores = document.querySelectorAll('.score-top')
+        scores.forEach(item => {
+            item.remove()
+        })
+
+        let info = await fetch(`http://localhost:3000/rank/getScore`)
+            .then(response => response.json())
+            .then(data => data);
+
+        let sortedInfo = info.sort((a, b) => b.score - a.score).slice(0, 5)
+
+        let containerScore = document.querySelector('.container-top-score')
+
+        sortedInfo.forEach(item => {
+
+            let aux = document.createElement('div')
+            aux.className = "score-top"
+            aux.innerText = `${item.name}: ${item.score}`
+
+            containerScore.appendChild(aux)
+        })
+
+        // document.createElement
+    }
+    userInfo() {
+
     }
 }
 
