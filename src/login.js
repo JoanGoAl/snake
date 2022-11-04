@@ -85,6 +85,9 @@ class Login {
                 this.loginStatus = true
                 labelError.innerText = ''
 
+                this.maxScore = info.score
+
+                localStorage.setItem('user', JSON.stringify({ name: this.userName, score: info.score }))
                 this.drawProfile()
             } else {
                 labelError.innerText = 'Usuario o contraseña incorrecta'

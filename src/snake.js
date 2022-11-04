@@ -8,7 +8,7 @@ class Snake {
         this.dir = new Vector(0, 0);
         this.delay = 5;
         this.size = W / cells;
-        this.color = "white";
+        this.color = localStorage.getItem('snakeColor');
         this.history = [];
         this.longitud = 1;
         this.isGameOver = false;
@@ -28,7 +28,7 @@ class Snake {
             for (let i = 0; i < this.history.length - 1; i++) {
                 let { x, y } = this.history[i];
                 ctx.lineWidth = 1;
-                ctx.fillStyle = "rgba(225,225,225,1)";
+                ctx.fillStyle = `${localStorage.getItem('snakeColor')}D9`;
                 ctx.fillRect(x, y, this.size, this.size);
             }
         }

@@ -11,6 +11,8 @@ ctx.lineWidth = 1;
 ctx.strokeStyle = "#23233275";
 ctx.shadowBlur = 0;
 
+localStorage.removeItem('user')
+localStorage.setItem('snakeColor', 'white')
 
 const start = () => {
     let dificultad = document.querySelector('input[name="diff"]:checked').value;
@@ -118,6 +120,19 @@ const getScore = async () => {
     });
     // document.createElement
 }
+
+let logout = document.querySelector('.logout')
+
+logout.addEventListener('click', () => {
+    window.location.reload()
+})
+
+let colorPicker = document.getElementById('snakeColor')
+
+colorPicker.addEventListener('change', (e) => {
+    localStorage.setItem('snakeColor', e.target.value)
+})
+
 getScore()
 
 login = new Login()

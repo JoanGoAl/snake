@@ -30,3 +30,48 @@
     text-align: center;
     margin-bottom: 15px;
 }
+
+.container-customize {
+    margin-top: 15px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    align-items: center;
+    color: black;
+}
+
+.container-customize>input {
+    width: 50px;
+    height: 30px;
+    padding: 0;
+    margin-left: 15px;
+}
+
+.container-logout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logout {
+    background-color: #1FAAC9;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    font-family: 'Varela Round';
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+    letter-spacing: 0.3em;
+    height: 60px;
+    width: 120px;
+    line-height: 30px;
+    padding: 0 10px;
+    box-shadow: 0 0 10px 5px rgba(black, 0.2);
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+}
