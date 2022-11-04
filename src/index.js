@@ -121,4 +121,4 @@ const getScore = async () => {
 getScore()
 
 login = new Login()
-// login.drawLogin()
+login.drawLogin()

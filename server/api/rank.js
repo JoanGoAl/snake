@@ -2,25 +2,59 @@ const fs = require('fs')
 
 exports.setRank = async (req, res) => {
 
+    console.log(req.body);
     const info = {
-        name: req.params.name,
-        score: req.params.score
+        name: req.body.name,
+        score: req.body.score
     }
     const path = './bbdd/rank.json';
 
     try {
         let inforank = JSON.parse(fs.readFileSync(path))
 
+        inforank.map(item => {
+            if (item.name == info.name && item.score < info.score) {
+                return info
+            }
+            return item
+        })
+        // inforank.push(info)
+        newInfo = inforank.map(item => {
+            if (item.name == info.name && item.score < info.score) {
+                return info
+            }
+            return item
+        })
 
+        let names = newInfo.map(item => item.name)
 
-        inforank.push(info)
+        if (!names.includes(info.name)) newInfo.push(info)
 
-        console.log();
+        fs.writeFileSync(path, JSON.stringify(newInfo), 'utf8');
 
-        fs.writeFileSync(path, JSON.stringify(inforank, null, 2), 'utf8');
-        res.send(inforank)
+        res.send(newInfo)
     } catch (error) {
         res.send({ info: 'An error has occurred ', error })
+    }
+}
+
+exports.setUserScore = async (req, res) => {
+    console.log(req.body);
+    try {
+        let users = JSON.parse(fs.readFileSync('./bbdd/users.json'))
+
+        users.map(item => {
+            if (item.name == req.body.name && item.score < req.body.score) {
+                item.score = req.body.score
+            }
+            return item
+        })
+
+        fs.writeFileSync('./bbdd/users.json', JSON.stringify(users), 'utf8');
+
+        res.send({ info: "Its ok" })
+    } catch (error) {
+        res.send(error)
     }
 }
 

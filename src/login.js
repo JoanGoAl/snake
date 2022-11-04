@@ -26,8 +26,9 @@ class Login {
         this.passwd = ""
         this.maxScore = ""
         this.loginStatus = false
-        this.avatar = `https://robohash.org/${this.userName}-one`
+        this.avatar = `https://api.multiavatar.com/${this.userName}.png`
     }
+
     drawLogin() {
         background.className = 'background'
         shape1.className = 'shape'
@@ -39,7 +40,7 @@ class Login {
 
         labelName.setAttribute('for', 'username')
         inputName.type = 'text'
-        inputName.placeholder = 'Email'
+        inputName.placeholder = 'Username'
         inputName.id = 'username'
 
         labelPasswd.setAttribute('for', 'passwd')
@@ -80,10 +81,11 @@ class Login {
                 .then(response => response.json())
                 .then(data => data);
 
-
             if (this.passwd === info.passwd) {
                 this.loginStatus = true
                 labelError.innerText = ''
+
+                this.drawProfile()
             } else {
                 labelError.innerText = 'Usuario o contraseña incorrecta'
             }
@@ -94,6 +96,21 @@ class Login {
         if (this.loginStatus) {
             this.clearLogin()
         }
+    }
+    drawProfile() {
+
+        let img = document.createElement('img')
+        img.src = `https://api.multiavatar.com/${this.userName}.png`
+
+        let username = document.createElement('h3')
+        username.innerText = this.userName
+
+        let score = document.createElement('h3')
+        score.innerText = `Max Score: ${this.maxScore}`
+
+        document.querySelector('.your-top-score').appendChild(score)
+        document.querySelector('.container-username').appendChild(username)
+        document.querySelector('.container-img').appendChild(img)
     }
     clearLogin() {
         contiainerAll.remove()
